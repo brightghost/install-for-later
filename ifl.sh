@@ -7,6 +7,7 @@
 #      installed.
 # --2015/11/7: Cleaned up formatting and added a bit of verbosity to the
 #      successful install output.
+# --2015/11/21: Binary list function, which is more intelligent than before.
 
 package=$1
 packagelog="$HOME/documents/new-pkgs.txt"
