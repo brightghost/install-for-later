@@ -11,6 +11,17 @@
 package=$1
 packagelog="$HOME/documents/new-pkgs.txt"
 
+list_binaries ()
+{
+    # Retrieve the list of affected files from dpkg and filter for executables.
+    arg=$1
+    for i in $(dpkg -L $arg); do 
+        if [[ -x $i && ! -d $i ]]; then 
+            echo $i 
+        fi
+    done
+}
+
 if [[ -z $package ]]; then
     echo >&2 "You must supply a package name to install. Exiting."
     exit 1
@@ -35,7 +46,7 @@ if [[ $? != 0 ]]; then
     echo "============================" >> $packagelog
     apt-cache show $package | grep ^Description-en >> $packagelog
     echo "Binaries:" >> $packagelog
-    dpkg -L $package | grep bin >> $packagelog
+    list_binaries $package >> $packagelog
     echo "" >> $packagelog
 
     # Print message to stdout to verify the install was logged.
@@ -47,7 +58,7 @@ if [[ $? != 0 ]]; then
     echo ""
     echo "Included binaries:"
     echo ""
-    dpkg -L $package | grep bin
+    list_binaries $package
 else
     # Remind the user what the package contains if they try to install it
     # again, because they probably forgot about it!
@@ -56,7 +67,7 @@ else
     echo ""
     echo "Binaries:"
     echo ""
-    dpkg -L $package | grep bin
+    list_binaries $package
     echo ""
     echo "Other files:"
     echo ""
