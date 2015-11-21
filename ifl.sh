@@ -47,10 +47,10 @@ if [[ $? != 0 ]]; then
     echo ""
     echo "Included binaries:"
     echo ""
-    echo dpkg -L $package | grep bin
+    dpkg -L $package | grep bin
 else
     # Remind the user what the package contains if they try to install it
-    # again, because the probably forgot about it!
+    # again, because they probably forgot about it!
     echo >&2 "$package is already installed. It affects the files below:"
     sleep 2
     echo ""
