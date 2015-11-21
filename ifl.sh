@@ -69,8 +69,6 @@ else
     echo ""
     list_binaries $package
     echo ""
-    echo "Other files:"
-    echo ""
-    dpkg -L $package | grep -v bin
+    echo -e "Run 'dpkg -L $package' to see all affected files."
     exit 1    
 fi
